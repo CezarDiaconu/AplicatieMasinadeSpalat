@@ -20,7 +20,10 @@ public class MasiniActivity extends AppCompatActivity {
     private RezervareMasini rezervareMasini;
     private String durata = "";
     private String ziua = "";
-    private int ora = 0;
+    double ora = 0;
+    double oraf = 0;
+
+    int ziuaValue=-1;
 
 
     @Override
@@ -55,7 +58,7 @@ public class MasiniActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup View, int checkedId) {
                 RadioButton selectedRadioButton = findViewById(checkedId);
-                String durata = "";
+                durata = "";
                 if (selectedRadioButton != null) {
                     durata = selectedRadioButton.getText().toString();
                 }
@@ -65,61 +68,85 @@ public class MasiniActivity extends AppCompatActivity {
         });
 
         TextView oraProgramarii = findViewById(R.id.oraProgramarii);
+
+        // Programare Interval
         Button programeazaBtn = findViewById(R.id.programeazaBtn);
         programeazaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double ora = Double.parseDouble(oraProgramarii.getText().toString());
-                double oraf = 0.0; // Initialize oraf as a double
-                if (durata.equals("30 min")) {
-                    oraf =  (ora + 0.5);
-                }
-                else if (durata.equals("1 ora")) {
-                    oraf =  (ora + 2);
-                }
-                else if (durata.equals("2 ore")) {
-                    oraf =  (ora + 2);
-                }
+                ora = Double.parseDouble(oraProgramarii.getText().toString());
+                if(oraf == 0) {
+                    if (durata.equals("30 min")) {
+                        oraf = (ora + 0.5);
+                    } else if (durata.equals("1 ora")) {
+                        oraf = (ora + 2);
+                    } else if (durata.equals("2 ore")) {
+                        oraf = (ora + 2);
+                    }
 
-                int ziuaValue = -1;
-                switch (ziua) {
-                    case "Luni":
-                        ziuaValue = 0;
-                        break;
-                    case "Marti":
-                        ziuaValue = 1;
-                        break;
-                    case "Miercuri":
-                        ziuaValue = 2;
-                        break;
-                    case "Joi":
-                        ziuaValue = 3;
-                        break;
-                    case "Vineri":
-                        ziuaValue = 4;
-                        break;
-                    case "Sambata":
-                        ziuaValue = 5;
-                        break;
-                    case "Duminica":
-                        ziuaValue = 6;
-                        break;
-                    default:
-                        // Poți trata aici cazurile în care ziua nu este recunoscută sau eroare
-                        break;
-                }
+                    ziuaValue = -1;
+                    switch (ziua) {
+                        case "Luni":
+                            ziuaValue = 0;
+                            break;
+                        case "Marti":
+                            ziuaValue = 1;
+                            break;
+                        case "Miercuri":
+                            ziuaValue = 2;
+                            break;
+                        case "Joi":
+                            ziuaValue = 3;
+                            break;
+                        case "Vineri":
+                            ziuaValue = 4;
+                            break;
+                        case "Sambata":
+                            ziuaValue = 5;
+                            break;
+                        case "Duminica":
+                            ziuaValue = 6;
+                            break;
+                        default:
+                            // Poți trata aici cazurile în care ziua nu este recunoscută sau eroare
+                            break;
+                    }
 
-                if (ziuaValue != -1 && rezervareMasini.isIntervalDisponibil(ziuaValue, ora, oraf)) {
-                    rezervareMasini.programeazaInterval(ziuaValue, ora, oraf);
-                } else {
-                    Toast.makeText(MasiniActivity.this, "Intervalul este ocupat!", Toast.LENGTH_SHORT).show();
+                    if (ziuaValue != -1 && rezervareMasini.isIntervalDisponibil(ziuaValue, ora, oraf)) {
+                        rezervareMasini.programeazaInterval(ziuaValue, ora, oraf);
+                        Toast.makeText(MasiniActivity.this, "Programarea a fost facuta!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(MasiniActivity.this, "Intervalul este ocupat!", Toast.LENGTH_SHORT).show();
+                    }
+                    Log.d("Debug", "ziua: " + ziua);
+                    Log.d("Debug", "durata: " + durata);
+                    Log.d("Debug", "ora: " + ora);
+                    Log.d("Debug", "oraf: " + oraf);
+                    Log.d("Debug", "ziuaValue: " + ziuaValue);
                 }
-                Log.d("Debug", "ziua: " + ziua);
-                Log.d("Debug", "durata: " + durata);
-                Log.d("Debug", "ora: " + ora);
-                Log.d("Debug", "oraf: " + oraf);
-                Log.d("Debug", "ziuaValue: " + ziuaValue);
-        };
+                else{
+                    Toast.makeText(MasiniActivity.this, "Aveti deja o programare facuta!", Toast.LENGTH_SHORT).show();
+                }
+                };
     });
+        //Programare Interval
+
+
+        // Anulare Interval Programat
+        Button anuleazaProgramareabtn = findViewById(R.id.anuleazaprogramareabtn);
+        anuleazaProgramareabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (ziuaValue != -1 && rezervareMasini.isIntervalDisponibil(ziuaValue, ora, oraf) == false) {
+                    rezervareMasini.anuleazaInterval(ziuaValue, ora, oraf);
+                    oraf = 0;
+                    Toast.makeText(MasiniActivity.this, "Intevalul a fost anulat", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MasiniActivity.this, "Nu aveti o programare facuta", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        // Anulare Interval Programat
 }
 }

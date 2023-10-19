@@ -36,4 +36,14 @@ public class RezervareMasini {
             disponibilitate[ziua][i] = 1; // Marcam intervalul ca ocupat
         }
     }
+    public void anuleazaInterval(int ziua, double oraInceput, double oraSfarsit){
+        int indexOraInceput = (int) ((oraInceput - 8) * 2); // Transformăm ora în index
+        int indexOraSfarsit = (int) ((oraSfarsit - 8) * 2); // Transformăm ora în index
+        indexOraInceput = Math.round(indexOraInceput);
+        indexOraSfarsit = Math.round(indexOraSfarsit);
+
+        for (int i = indexOraInceput; i < indexOraSfarsit; i++) {
+            disponibilitate[ziua][i] = 0; // Marcam intervalul ca liber
+        }
+    }
 }

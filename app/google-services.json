@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "811028645445",
+    "project_id": "masinaspalat-70692",
+    "storage_bucket": "masinaspalat-70692.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811028645445:android:a8c03286170b2cbf88052c",
+        "android_client_info": {
+          "package_name": "com.example.loginform"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDru2ShHzsj1fAFNhA1zU20KOFdmm4MuNk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811028645445:android:3c9644c7aa616fc588052c",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDru2ShHzsj1fAFNhA1zU20KOFdmm4MuNk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
